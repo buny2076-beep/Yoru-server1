@@ -10,6 +10,7 @@ const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 10000);
 const PUBLIC_DIR = path.join(__dirname, "public");
+const ROOT_INDEX = path.join(__dirname, "index.html");
 const GENERATED_DIR = path.join(PUBLIC_DIR, "generated");
 const MAX_PROMPT_LENGTH = 8000;
 
@@ -108,7 +109,13 @@ app.post("/api/ai-master/generate", async (req, res) => {
   }
 });
 
-app.get("*", (_req, res) => res.sendFile(path.join(PUBLIC_DIR, "index.html")));
+app.get("*", (_req, res) => {
+  res.sendFile(ROOT_INDEX, (err) => {
+    if (err && !res.headersSent) {
+      res.status(404).send("YORU index.html not found");
+    }
+  });
+});
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`YORU AI Master server listening on port ${PORT}`);
