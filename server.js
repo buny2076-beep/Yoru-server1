@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 10000);
-const PUBLIC_DIR = path.join(__dirname, "public");
+const PUBLIC_DIR = __dirname;
 const ROOT_INDEX = path.join(__dirname, "index.html");
 const GENERATED_DIR = path.join(PUBLIC_DIR, "generated");
 const MAX_PROMPT_LENGTH = 8000;
